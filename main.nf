@@ -1,13 +1,22 @@
 #!/usr/bin/env nextflow
 
-
+/*
+#######################
+Code documentation
+#######################
+1. Define a default parameter `params.trimmed=true`
+2. Check if the `inputRawFilePattern` is trimmed or untrimmed
+3. The `trimmed` file has `p` in the file pattern whereas untrimmed file does not have `p` in the file pattern
+4. Based on the file pattern the input parameter of the script is defined
+5. Execute the script to gunzip the input file using `gzip –dc` command and stores the output into the `publishDir`
+*/
 
 /*
 ################
 params
 ################
 */
-//NOTE: default parameter
+
 params.trimmed=true
 
 
@@ -20,7 +29,7 @@ NEXTFLOW Global Config
 
 inputUntrimmedRawFilePattern = "./*_{R1,R2}.fastq.gz"
 
-//NOTE: This pipeline is starts with `trimmed` because of the `p` in the file pattern.
+
 inputTrimmedRawFilePattern = "./*_{R1,R2}.p.fastq.gz"
 
 inputRawFilePattern = params.trimmed ? inputTrimmedRawFilePattern : inputUntrimmedRawFilePattern
