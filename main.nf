@@ -58,8 +58,9 @@ process gzip {
     script:
     outputExtension = params.trimmed ? '.p.fastq' : '.fastq'
     
-    // rename the output files
-    // G04880_R1.p.fastq.gz > G04880_R1.p.fastq
+    /* rename the output files
+     XYZ.p.fastq.gz  XYZ.p.fastq
+     */
     genome_1_fq = read_1_gz.name.split("\\.")[0] + outputExtension
     genome_2_fq = read_2_gz.name.split("\\.")[0] + outputExtension
 
@@ -67,5 +68,5 @@ process gzip {
     gzip -dc ${read_1_gz} > ${genome_1_fq} 
     gzip -dc ${read_2_gz} > ${genome_2_fq}
     """
-//gzip -dc G04880_R1.p.fastq.gz > G04880_R1.p.fastq
+//gzip -dc XYZ_R1.p.fastq.gz > XYZ_R1.p.fastq
 }
