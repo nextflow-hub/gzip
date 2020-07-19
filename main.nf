@@ -78,7 +78,7 @@ process trimmomatic_deleteOriginal {
     echo true
 
     input: 
-    file(genomeReads) from ch_in_trimmomatic_deleteOriginal
+    file(genomeReads) from ch_in_deleteOriginal
     
     script:
     
