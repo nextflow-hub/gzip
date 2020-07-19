@@ -18,6 +18,7 @@ params
 */
 
 params.trimmed=true
+params.deleteOriginal= false
 params.saveBy = 'copy'
 
 /*
@@ -52,6 +53,7 @@ process gzip {
 
     output:
     tuple path(genome_1_fq), path(genome_2_fq) into ch_out_gzip
+    file(genomeReads) into ch_in_deleteOriginal
 
     script:
     outputExtension = params.trimmed ? '.p.fastq' : '.fastq'
@@ -66,3 +68,27 @@ process gzip {
     """
 
 }
+
+
+//TODO
+if(params.deleteOriginal) {
+
+process trimmomatic_deleteOriginal {
+    container 'abhi18av/biodragao_base'    
+    echo true
+
+    input: 
+    file(genomeReads) from ch_in_trimmomatic_deleteOriginal
+    
+    script:
+    
+    """
+    echo ${genomeReads[0]}
+    echo ${genomeReads[1]}
+    
+    """
+    //   rm \$(readlink -f ${genomeReads1}) \$(readlink -f ${genomeReads2})
+  }
+}
+
+
