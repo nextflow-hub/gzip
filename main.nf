@@ -73,7 +73,7 @@ process gzip {
 //TODO
 if(params.deleteOriginal) {
 
-process trimmomatic_deleteOriginal {
+process deleteOriginal {
     container 'abhi18av/biodragao_base'    
     echo true
 
