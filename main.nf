@@ -75,7 +75,6 @@ if(params.deleteOriginal) {
 
 process deleteOriginal {
     container 'abhi18av/biodragao_base'    
-    echo true
 
     input: 
     file(genomeReads) from ch_in_deleteOriginal
@@ -83,11 +82,10 @@ process deleteOriginal {
     script:
     
     """
-    echo ${genomeReads[0]}
-    echo ${genomeReads[1]}
+    rm \$(readlink -f ${genomeReads[0]}) \$(readlink -f ${genomeReads[1]})
     
     """
-    //   rm \$(readlink -f ${genomeReads1}) \$(readlink -f ${genomeReads2})
+
   }
 }
 
