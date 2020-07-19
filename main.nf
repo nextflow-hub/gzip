@@ -34,7 +34,7 @@ inputTrimmedRawFilePattern = "./*_{R1,R2}.p.fastq.gz"
 inputRawFilePattern = params.trimmed ? inputTrimmedRawFilePattern : inputUntrimmedRawFilePattern
 
 Channel.fromFilePairs(inputRawFilePattern)
-        .into { ch_in_gzip }
+        .into { ch_in_gzip; ch_in_deleteOriginal }
 
 
 /*
@@ -49,11 +49,10 @@ process gzip {
     publishDir 'results/gzip', mode: params.saveBy
 
     input:
-    set genomeFileName, file(genomeReads) from ch_in_gzip
+    set genomeName, file(genomeReads) from ch_in_gzip
 
     output:
     tuple path(genome_1_fq), path(genome_2_fq) into ch_out_gzip
-    file(genomeReads) into ch_in_deleteOriginal
 
     script:
     outputExtension = params.trimmed ? '.p.fastq' : '.fastq'
@@ -70,14 +69,14 @@ process gzip {
 }
 
 
-//TODO
+
 if(params.deleteOriginal) {
 
 process deleteOriginal {
     container 'abhi18av/biodragao_base'    
 
     input: 
-    file(genomeReads) from ch_in_deleteOriginal
+    tuple genomeName, file(genomeReads) from ch_in_deleteOriginal
     
     script:
     
