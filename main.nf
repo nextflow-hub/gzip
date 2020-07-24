@@ -1,9 +1,10 @@
 #!/usr/bin/env nextflow
 
 /*
-#######################
-Code documentation
-#######################
+#==============================================
+code documentation
+#==============================================
+
 1. Define a default parameter `params.trimmed=true`
 2. Check if the `inputRawFilePattern` is trimmed or untrimmed
 3. The `trimmed` file has `p` in the file pattern whereas untrimmed file does not have `p` in the file pattern
@@ -12,12 +13,12 @@ Code documentation
 */
 
 /*
-################
+#==============================================
 params
-################
+#==============================================
 */
 
-params.trimmed=true
+params.trimmed = true
 params.saveBy = 'copy'
 
 /*
@@ -36,12 +37,12 @@ Channel.fromFilePairs(inputRawFilePattern)
         .into { ch_in_gzip }
 
 
-/*
-################
-gzip these files
-################
-*/
 
+/*
+#==============================================
+gunzip
+#==============================================
+*/
 
 process gzip {
     container 'abhi18av/biodragao_base'
@@ -55,7 +56,7 @@ process gzip {
 
     script:
     outputExtension = params.trimmed ? '.p.fastq' : '.fastq'
-    
+
     // rename the output files
     genome_1_fq = genomeReads[0].name.split("\\.")[0] + outputExtension
     genome_2_fq = genomeReads[1].name.split("\\.")[0] + outputExtension
@@ -66,3 +67,10 @@ process gzip {
     """
 
 }
+
+
+/*
+#==============================================
+# extra
+#==============================================
+*/
