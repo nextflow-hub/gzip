@@ -20,6 +20,7 @@ params
 
 params.trimmed = false
 params.saveBy = 'copy'
+params.resultsDir = 'results/gunzip'
 
 /*
 ################
@@ -46,7 +47,7 @@ gunzip
 
 process gzip {
     container 'abhi18av/biodragao_base'
-    publishDir 'results/gzip', mode: params.saveBy
+    publishDir params.resultsDir, mode: params.saveBy
 
     input:
     set genomeFileName, file(genomeReads) from ch_in_gzip
