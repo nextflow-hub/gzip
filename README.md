@@ -1,4 +1,4 @@
-# Nextflow wrapper for `gunzip` process.
+# Nextflow wrapper for `gzip` process.
 
 ## Pre-requisites
 
@@ -10,21 +10,54 @@
 ## Usage
 
 ```
-nextflow run https://github.com/nextflow-hub/gunzip
+nextflow run https://github.com/nextflow-hub/gzip
 ```
 
 ## Options
 
-- `trimmed` and `untrimmed` input files
 
-By default the pipeline assumes the files to follow the `*.p.fastq.gz` format. For untrimmed files i.e. `*.fastq.gz` pattern simply add the `trimmed` option as false.
+- `filePattern`
+
+By default, the process assumes the files to follow the `*_{R1,R2}.fastq.gz` pattern, which could be customized using this option
 
 ```
-nextflow run https://github.com/nextflow-hub/gunzip --trimmed false
+nextflow run https://github.com/nextflow-hub/gzip --filePattern './*_{1,2}.fastq.gz'
 ```
+
+- `compress`
+
+By default, this process does `de-compression` , which could be customized using this option
+
+```
+nextflow run https://github.com/nextflow-hub/gzip --compress 
+```
+
 - `resultsDir`
 
-**NOTE**: By default, it stores the result files locally into `results/gzip` directory.
+By default, it stores the result files locally inside the `results` directory.
+
+```
+nextflow run https://github.com/nextflow-hub/gzip --resultsDir /path/to/custom/resultsDir
+```
+
+- `saveMode`
+
+By default, the pipeline publishes the results in the `resultsDir` by copying the relevant output.
+
+You can update this behavior by simply specifying the alternative such as `move` or `link` etc. 
+
+```
+nextflow run https://github.com/nextflow-hub/gzip --saveMode move
+```
+
+For more information please refer [Nextflow documentation](https://www.nextflow.io/docs/latest/process.html#publishdir)
+
+## Customizing the script
+
+The sole purpose of process wrappers in `nextflow-hub` is to keep the code small, clean and hackable with some basic knowledge of `nextflow` scripting.
+
+If you have specific requirements, you are encouraged to fork/clone and update your version to accomodate your needs. 
+
 
 ## Contribution
 
